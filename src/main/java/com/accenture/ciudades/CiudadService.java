@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 
 
+
+
 @Service
 public class CiudadService {
 	@Autowired
@@ -25,6 +27,11 @@ public class CiudadService {
 		//return topics.stream().filter(t -> t.getId().equals(id)).findFirst().get();
 		 return ciudadrepository.findOne(id);
 		}
+	public void addCiudad(Ciudad ciudad) {
+		//topics.add(topic);
+		ciudadrepository.save(ciudad);
+		
+	}
 	 
 	
 }

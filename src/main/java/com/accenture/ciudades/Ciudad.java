@@ -3,69 +3,107 @@ package com.accenture.ciudades;
 import javax.persistence.*;
 
 @Entity
-@Table(name="ciudades_table")
+//@Table(name="ciudades_table")
 public class Ciudad {
 	
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private String ident;
 	private String nombre;
 	private String departamento;
-	private String nHabitantes;
-	private String posImport;
+	private String habitantes;
+	private String importancia;
 	private String gentilicio;
+	private String activo;
 	
 	
 	public Ciudad() {
 		super();
 	}
-	
-	public Ciudad(String id, String nombre, String departamento, String nHabitantes, String posImport,
-			String gentilicio) {
+
+
+	public Ciudad(String ident, String nombre, String departamento, String habitantes, String importancia,
+			String gentilicio, String activo) {
 		super();
-		this.id = id;
+		this.ident = ident;
 		this.nombre = nombre;
 		this.departamento = departamento;
-		this.nHabitantes = nHabitantes;
-		this.posImport = posImport;
+		this.habitantes = habitantes;
+		this.importancia = importancia;
 		this.gentilicio = gentilicio;
+		this.activo = activo;
 	}
 
-	public String get_id() {
-		return id;
+
+	public String getIdent() {
+		return ident;
 	}
-	public void set_id(String id) {
-		this.id = id;
+
+
+	public void setIdent(String ident) {
+		this.ident = ident;
 	}
+
+
 	public String getNombre() {
 		return nombre;
 	}
+
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+
 	public String getDepartamento() {
 		return departamento;
 	}
+
+
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}
+
+
+	public String getHabitantes() {
+		return habitantes;
+	}
+
+
+	public void setHabitantes(String habitantes) {
+		this.habitantes = habitantes;
+	}
+
+
+	public String getImportancia() {
+		return importancia;
+	}
+
+
+	public void setImportancia(String importancia) {
+		this.importancia = importancia;
+	}
+
+
 	public String getGentilicio() {
 		return gentilicio;
 	}
+
+
 	public void setGentilicio(String gentilicio) {
 		this.gentilicio = gentilicio;
 	}
-	public String getnHabitantes() {
-		return nHabitantes;
+
+
+	public String getActivo() {
+		return activo;
 	}
-	public void setnHabitantes(String nHabitantes) {
-		this.nHabitantes = nHabitantes;
+
+
+	public void setActivo(String activo) {
+		this.activo = activo;
 	}
-	public String getPosImport() {
-		return posImport;
-	}
-	public void setPosImport(String posImport) {
-		this.posImport = posImport;
-	}
+	
 	
 	
 
