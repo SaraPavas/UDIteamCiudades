@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accenture.ciudades.dto.Ciudad;
+import com.accenture.ciudades.exception.DaoException;
 import com.accenture.ciudades.service.CiudadService;
 
 
@@ -40,6 +41,29 @@ public class CiudadController {
 	public void updateTopic(@RequestBody Ciudad ciudad, @PathVariable String id){
 		ciudadservice.updateCiudad(id, ciudad);
 	}
-	
-
+	@RequestMapping("/ciudades/search/{nombre}")
+	public List <Ciudad> getCiudadNombre(@PathVariable String nombre){
+		return ciudadservice.getCiudadbyNombre(nombre);
+	}
+	@RequestMapping("/ciudades/search2/{palabra}")
+	public List <Ciudad> getCiudadNombreDepartamento(@PathVariable String palabra){
+		return ciudadservice.getCiudadByNombreAndDepartamento(palabra);
+	}
+	@RequestMapping("/ciudades/actives")
+	public List <Ciudad> getActives(){
+		try {
+			return ciudadservice.ListarActivos();
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@RequestMapping("/ciudades/actives/{id}")
+	public Ciudad getActiveByIent(@PathVariable String id){
+		return ciudadservice.getActiveByIdent(id);
+	}
+	@RequestMapping("/ciudades/delete/{id}")
+	public void deleteActiveCiudad(@PathVariable String id){
+		ciudadservice.deleteCiudad(id);
+	}
 }
