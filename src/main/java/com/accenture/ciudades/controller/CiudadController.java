@@ -1,4 +1,5 @@
-package com.accenture.ciudades;
+package com.accenture.ciudades.controller;
+
 
 import java.util.List;
 
@@ -9,12 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.accenture.ciudades.dto.Ciudad;
+import com.accenture.ciudades.service.CiudadService;
+
 
 
 
 
 @RestController
 public class CiudadController {
+	
 	@Autowired
 	private CiudadService ciudadservice;
 

@@ -1,4 +1,4 @@
-package com.accenture.ciudades;
+package com.accenture.ciudades.dto;
 
 import javax.persistence.*;
 

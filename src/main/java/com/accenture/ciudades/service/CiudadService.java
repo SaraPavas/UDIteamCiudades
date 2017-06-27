@@ -1,4 +1,4 @@
-package com.accenture.ciudades;
+package com.accenture.ciudades.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.accenture.ciudades.bl.CiudadBl;
+import com.accenture.ciudades.dao.CiudadRepository;
+import com.accenture.ciudades.dto.Ciudad;
+
 
 
 @Service
-public class CiudadService {
+public class CiudadService implements CiudadBl {
+	
 	@Autowired
 	private CiudadRepository ciudadrepository;
 	
