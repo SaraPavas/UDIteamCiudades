@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+
 @RestController
 public class CiudadController {
 	@Autowired
@@ -29,6 +30,10 @@ public class CiudadController {
 	@RequestMapping (method = RequestMethod.POST, value = "/ciudades")
 	public void addTopic(@RequestBody Ciudad ciudad){
 		ciudadservice.addCiudad(ciudad);
+	}
+	@RequestMapping (method = RequestMethod.PUT, value = "/ciudades/{id}")
+	public void updateTopic(@RequestBody Ciudad ciudad, @PathVariable String id){
+		ciudadservice.updateCiudad(id, ciudad);
 	}
 	
 

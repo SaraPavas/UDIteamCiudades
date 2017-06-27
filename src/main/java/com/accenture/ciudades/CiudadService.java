@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 
 
-
-
 @Service
 public class CiudadService {
 	@Autowired
@@ -31,6 +29,10 @@ public class CiudadService {
 		//topics.add(topic);
 		ciudadrepository.save(ciudad);
 		
+	}
+	
+	public void updateCiudad(String id, Ciudad ciudad) {
+		ciudadrepository.save(ciudad);
 	}
 	 
 	
