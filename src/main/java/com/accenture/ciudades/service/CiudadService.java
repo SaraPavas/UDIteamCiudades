@@ -28,7 +28,9 @@ public class CiudadService implements CiudadBl {
 	@Autowired
 	private CiudadRepository ciudadrepository;
 
-	
+	/**
+	 * Lista todas las ciudades activas de la base de datos
+	 */
 	@Override
 	public List<Ciudad> ListarActivos() throws DaoException {
 		//List<Ciudad> ciudad = new ArrayList<>();
@@ -42,6 +44,12 @@ public class CiudadService implements CiudadBl {
 
 
 
+	 /**
+	 * Inserta una nueva ciudad a la base de datos, teniendo en cuenta que los campos no esten en blanco o tenga espacios,
+	 * si la ciudad existe y esta activa; si la ciudad está inactiva (Activo=false) se cambia de estado a activo (Activo=true),
+	 * finalmente se agrega una nueva ciudad si no existe en la base de datos
+	 * @param ciudad
+	 */
 	@Override
 	public void addNewCiudad(Ciudad ciudad) throws DaoException {
 		try {
@@ -75,29 +83,31 @@ public class CiudadService implements CiudadBl {
 		}
 
 	}
-	
+	/**
+	 * Determina si la ciudad existe 
+	 * @param c
+	 * @return true si la ciudad existe en la base de datos, falso si no existe o si esta inactivo
+	 */
 	public boolean ciudadExiste(Ciudad c){
-		System.out.println("Antes del if ciudad existe\n");
+		
 		if(c != null){
-			System.out.println("Antes del if getActivo existe\n");
-			System.out.println(c.getActivo()+ "\n"+ACTIVE_CIUDAD);
 			String isActive = c.getActivo();
 			if(isActive.equals(ACTIVE_CIUDAD)){
-			System.out.println("En el if de activo\n");
-			return true;}
+				return true;
+			}
 		}
-		System.out.println("Retorna false\n");
 		return false;
 
 	}
 	
-	
+	/**
+	 * Actualiza una ciudad existente en la base de datos. Verifica que exista y se procede a actualizar
+	 */
 	@Override
 	public void updateExistingCiudad(String id, Ciudad ciudad) throws DaoException {
 		try {
 			Ciudad c = new Ciudad();
 			c=ciudadrepository.findByIdent(ciudad.getIdent());
-			System.out.println(c.getIdent());
 			if(ciudadExiste(c)){
 				ciudadrepository.save(ciudad);
 			}else{
@@ -133,10 +143,15 @@ public class CiudadService implements CiudadBl {
 		ciudadrepository.save(ciudad);
 	}
 	
+	/**
+	 * Filtra las ciudades por nombre
+	 * @param strNombre
+	 * @return ciudad encontrada
+	 */
 	public List <Ciudad> getCiudadbyNombre(String strNombre){
 		//Ciudad ciudadEncontrada = new Ciudad();
 		try {
-			return ciudadrepository.findByNombreContaining(strNombre);
+			return ciudadrepository.findByNombreStartingWith(strNombre);
 			
 		} catch (DaoException e) {
 			e.printStackTrace();
@@ -145,14 +160,29 @@ public class CiudadService implements CiudadBl {
 		
 		
 	}
-	
+	/**
+	 * Filtra por ciudad y por departamento
+	 * @param palabra
+	 * @return ciudad encontrada
+	 */
 	public List<Ciudad> getCiudadByNombreAndDepartamento(String palabra) {
 		
 		List<Ciudad> ciudad = new ArrayList<>();
 		
 		try {
-			ciudad.addAll(ciudadrepository.findByNombreContaining(palabra));
-			ciudad.addAll(ciudadrepository.findByDepartamentoContaining(palabra));
+			
+			ciudad.addAll(ciudadrepository.findByNombreStartingWith(palabra));
+			ciudad.addAll(ciudadrepository.findByDepartamentoStartingWith(palabra));
+			for(int i=0; i<ciudad.size(); i++){
+				System.out.println(ciudad.get(i).getNombre()+"\n");
+				if(ciudad.get(i).getActivo().equals(NO_ACTIVE_CIUDAD)){
+					ciudad.remove(i);
+				}
+			}
+			System.out.println(ciudad.size()+"\n");
+			for(int i=0; i<ciudad.size(); i++){
+				System.out.println(ciudad.get(i).getNombre()+"\n");
+			}
 			return ciudad; 
 		} catch (DaoException e) {
 			e.printStackTrace();
@@ -161,7 +191,11 @@ public class CiudadService implements CiudadBl {
 		return null;
 		
 	}
-	
+	/**
+	 * Lista una ciudad por id siempre y cuando este activa
+	 * @param i es el id de la ciudad
+	 * @return
+	 */
 	public Ciudad getActiveByIdent(String i){
 		try {
 			
@@ -171,7 +205,10 @@ public class CiudadService implements CiudadBl {
 		}
 		return null;
 	}
-	
+	/**
+	 * Eliminado lógico de una ciduad de la base de datos
+	 * @param i: id de la ciudad
+	 */
 	public void deleteCiudad(String i){
 		
 		Ciudad ciudad = new Ciudad();
