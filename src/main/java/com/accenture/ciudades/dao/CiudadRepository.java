@@ -18,4 +18,5 @@ public interface CiudadRepository extends CrudRepository<Ciudad,String>{
 	List<Ciudad> findByActivo(String status) throws DaoException;
 	Ciudad findByIdentAndActivo(String i, String status) throws DaoException;
 	Ciudad findByNombre(String nombre);
+	Ciudad findByIdent(String ident);
 }

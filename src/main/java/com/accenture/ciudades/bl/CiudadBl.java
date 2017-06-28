@@ -9,6 +9,6 @@ public interface CiudadBl {
 	
 	List<Ciudad> ListarActivos() throws DaoException;
 	void addNewCiudad(Ciudad ciudad) throws DaoException;
-//	boolean ciudadExiste(Ciudad ciudad) throws DaoException;
+	void updateExistingCiudad(String ident, Ciudad ciudad) throws DaoException;
 
 }

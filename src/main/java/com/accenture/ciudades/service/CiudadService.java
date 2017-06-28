@@ -19,7 +19,7 @@ import com.accenture.ciudades.exception.DaoException;
 public class CiudadService implements CiudadBl {
 	
 	
-	private final String ACTIVE_CIUDAD="TRUE";
+	private final String ACTIVE_CIUDAD="true";
 	private final String NO_ACTIVE_CIUDAD="false";
 	
 
@@ -77,17 +77,38 @@ public class CiudadService implements CiudadBl {
 	}
 	
 	public boolean ciudadExiste(Ciudad c){
-		
+		System.out.println("Antes del if ciudad existe\n");
 		if(c != null){
-			if(c.getActivo() == ACTIVE_CIUDAD){
+			System.out.println("Antes del if getActivo existe\n");
+			System.out.println(c.getActivo()+ "\n"+ACTIVE_CIUDAD);
+			String isActive = c.getActivo();
+			if(isActive.equals(ACTIVE_CIUDAD)){
+			System.out.println("En el if de activo\n");
 			return true;}
 		}
-	
+		System.out.println("Retorna false\n");
 		return false;
 
 	}
 	
 	
+	@Override
+	public void updateExistingCiudad(String id, Ciudad ciudad) throws DaoException {
+		try {
+			Ciudad c = new Ciudad();
+			c=ciudadrepository.findByIdent(ciudad.getIdent());
+			System.out.println(c.getIdent());
+			if(ciudadExiste(c)){
+				ciudadrepository.save(ciudad);
+			}else{
+				throw new DaoException("No es posible modificar, la ciudad no existe en la base de datos");
+			}
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 
 
 	public List<Ciudad> getAllCiudades () {

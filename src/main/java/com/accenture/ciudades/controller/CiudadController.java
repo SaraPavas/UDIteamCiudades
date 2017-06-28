@@ -75,4 +75,12 @@ public class CiudadController {
 		}
 		
 	}
+	@RequestMapping (method = RequestMethod.PUT, value = "/ciudades/update/{id}")
+	public void updateCiudad(@RequestBody Ciudad ciudad, @PathVariable String id){
+		try {
+			ciudadservice.updateExistingCiudad(id, ciudad);
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+	}
 }
