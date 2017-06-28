@@ -1,6 +1,7 @@
 package com.accenture.ciudades.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,20 @@ import com.accenture.ciudades.exception.DaoException;
 
 
 
+
 @Service
 public class CiudadService implements CiudadBl {
 	
 	
 	private final String ACTIVE_CIUDAD="TRUE";
-	private final String NO_ACTIVE_CIUDAD="FALSE";
+	private final String NO_ACTIVE_CIUDAD="false";
+	
+
 	
 	
 	@Autowired
 	private CiudadRepository ciudadrepository;
-	
+
 	
 	@Override
 	public List<Ciudad> ListarActivos() throws DaoException {
@@ -35,11 +39,55 @@ public class CiudadService implements CiudadBl {
 		}
 		return null;
 	}
-	
-	
 
-	
 
+
+	@Override
+	public void addNewCiudad(Ciudad ciudad) throws DaoException {
+		try {
+			String nombre = ciudad.getNombre();
+			String departamento = ciudad.getDepartamento();
+			String habitantes = ciudad.getHabitantes();
+			String importancia = ciudad.getImportancia();
+			String gentilicio = ciudad.getGentilicio();
+
+			Ciudad c = new Ciudad();
+			c = ciudadrepository.findByNombre(ciudad.getNombre()); 
+		
+			if(nombre == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el nombre de la ciudad");
+			if(departamento == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el nombre del departamento");
+			if(habitantes == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el número de habitantes");
+			if(importancia == null || "".equals(nombre.trim())) throw new DaoException("Ingrese la posición de importancia");
+			if(gentilicio == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el gentilicio");
+			if(ciudadExiste(c)) throw new DaoException("La ciudad ya existe en la base de datos");
+			
+			if(c != null ){
+				c.setActivo(ACTIVE_CIUDAD);
+				ciudadrepository.save(c);
+				
+			}else{
+				ciudad.setIdent(null);
+				ciudad.setActivo(ACTIVE_CIUDAD);
+				ciudadrepository.save(ciudad);
+			}
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public boolean ciudadExiste(Ciudad c){
+		
+		if(c != null){
+			if(c.getActivo() == ACTIVE_CIUDAD){
+			return true;}
+		}
+	
+		return false;
+
+	}
+	
+	
 
 
 	public List<Ciudad> getAllCiudades () {

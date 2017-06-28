@@ -66,4 +66,13 @@ public class CiudadController {
 	public void deleteActiveCiudad(@PathVariable String id){
 		ciudadservice.deleteCiudad(id);
 	}
+	@RequestMapping (method = RequestMethod.POST, value = "/ciudades/new")
+	public void addNewCity(@RequestBody Ciudad ciudad){
+		try {
+			ciudadservice.addNewCiudad(ciudad);
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

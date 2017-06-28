@@ -8,6 +8,7 @@ import com.accenture.ciudades.exception.DaoException;
 public interface CiudadBl {
 	
 	List<Ciudad> ListarActivos() throws DaoException;
-	//void addNewCiudad(Ciudad ciudad) throws DaoException;
+	void addNewCiudad(Ciudad ciudad) throws DaoException;
+//	boolean ciudadExiste(Ciudad ciudad) throws DaoException;
 
 }
