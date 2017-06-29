@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<title>Insert title here</title>
+</head>
+<body>
+
+<div class="container">
+<!-- <form action="" th:action="@{/update}" th:object="${id}" method="get"> -->
+<table class="table table-bordered table table-striped">
+  <tr>
+    <th class="tg-yw4l">ID</th>
+    <th class="tg-yw4l">Nombre</th>
+    <th class="tg-yw4l">Departamento</th>
+    <th class="tg-yw4l">Habitantes</th>
+    <th class="tg-yw4l">Posición de Importancia</th>
+    <th class="tg-yw4l">Gentilicio</th>
+    <th class="tg-yw4l">Opciones</th>
+ 
+  </tr>
+  <tr th:each="ciudad : ${ciudades}">
+    <td th:text="${ciudad.ident}" class="tg-yw4l"></td>
+    <td th:text="${ciudad.nombre}" class="tg-yw4l"></td>
+    <td th:text="${ciudad.departamento}" class="tg-yw4l"></td>
+    <td th:text="${ciudad.habitantes}" class="tg-yw4l"></td>
+    <td th:text="${ciudad.importancia}" class="tg-yw4l"></td>
+    <td th:text="${ciudad.gentilicio}" class="tg-yw4l"></td>
+    <td>
+    	<a th:href="@{'update/'+${ciudad.ident}}">Editar</a><a th:href="@{'delete/'+${ciudad.ident}}">Eliminar</a>
+    </td>
+  </tr>
+</table>
+<div class="row text-center" >
+                        <a th:href="@{/add}">Add New</a>
+                        
+                    </div>
+</div>
+</body>
+</html>

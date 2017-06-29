@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<title>Insert title here</title>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row text-center">
+			<div class="col-md-2"> </div>
+			<div class="col-md-8"> 
+				<form id="update" th:action="@{/ciudades}" th:object="${ciudad}" action="#" th:method="post">
+	 				<p><input type="text" th:value="${ciudad.ident}" readonly="readonly" th:field="*{ident}"/></p>
+	 				<p><label for="nombre">Ciudad</label> </p>
+			 		<p><input type="text" th:value="${ciudad.nombre}" readonly="readonly" th:field="*{nombre}"/></p>
+			 		<p><label for="nombre">Departamento</label></p>
+			 		<p><input type="text" th:value="${ciudad.departamento}" th:field="*{departamento}"/></p>
+			 		<p><label for="nombre">Número de  habitantes</label> </p>
+			 		<p><input type="text" th:value="${ciudad.habitantes}" th:field="*{habitantes}"/></p>
+			 		<p><label for="nombre">Posición de importancia</label></p>
+			 		<p><input type="text" th:value="${ciudad.importancia}" th:field="*{importancia}"/></p>
+			 		<p><label for="nombre">Gentilicio</label> </p>
+			 		<p><input type="text" th:value="${ciudad.gentilicio}" th:field="*{gentilicio}"/></p>
+ 		 			<div class="row text-center" >
+                            <button type="submit" name="update">Guardar</button>
+
+                    </div>
+ 				</form>
+			</div>
+ 			<div class="col-md-2"> </div>
+ 		</div>
+	</div>
+	 
+ 	
+</body>	
+
+
+</html>

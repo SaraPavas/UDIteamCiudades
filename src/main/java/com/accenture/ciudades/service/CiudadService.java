@@ -89,10 +89,12 @@ public class CiudadService implements CiudadBl {
 	 * @return true si la ciudad existe en la base de datos, falso si no existe o si esta inactivo
 	 */
 	public boolean ciudadExiste(Ciudad c){
-		
+		System.out.println(c.getActivo()+"1\n");
 		if(c != null){
+			System.out.println(c.getActivo()+"2\n");
 			String isActive = c.getActivo();
 			if(isActive.equals(ACTIVE_CIUDAD)){
+				System.out.println(c.getActivo()+"3\n");
 				return true;
 			}
 		}
@@ -108,6 +110,7 @@ public class CiudadService implements CiudadBl {
 		try {
 			Ciudad c = new Ciudad();
 			c=ciudadrepository.findByIdent(ciudad.getIdent());
+			System.out.println(c.getActivo()+"\n");
 			if(ciudadExiste(c)){
 				ciudadrepository.save(ciudad);
 			}else{
