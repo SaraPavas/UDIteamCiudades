@@ -61,22 +61,24 @@ public class CiudadService implements CiudadBl {
 
 			Ciudad c = new Ciudad();
 			c = ciudadrepository.findByNombre(ciudad.getNombre()); 
-		
-			if(nombre == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el nombre de la ciudad");
-			if(departamento == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el nombre del departamento");
-			if(habitantes == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el número de habitantes");
-			if(importancia == null || "".equals(nombre.trim())) throw new DaoException("Ingrese la posición de importancia");
-			if(gentilicio == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el gentilicio");
+			System.out.println(ciudad.getNombre()+"\n");
+			if(nombre.isEmpty() || nombre == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el nombre de la ciudad");
+			else if(departamento.isEmpty() || departamento == null || "".equals(departamento.trim())) throw new DaoException("Ingrese el nombre del departamento");
+			else if(habitantes.isEmpty() || habitantes == null || "".equals(habitantes.trim())) throw new DaoException("Ingrese el número de habitantes");
+			else if(importancia.isEmpty() || importancia == null || "".equals(importancia.trim())) throw new DaoException("Ingrese la posición de importancia");
+			else if(gentilicio.isEmpty() || gentilicio == null || "".equals(gentilicio.trim())) throw new DaoException("Ingrese el gentilicio");
+			System.out.println(ciudad.getNombre()+"\n");
 			if(ciudadExiste(c)) throw new DaoException("La ciudad ya existe en la base de datos");
-			
+			System.out.println(ciudad.getNombre()+"\n");
 			if(c != null ){
 				c.setActivo(ACTIVE_CIUDAD);
 				ciudadrepository.save(c);
-				
+				System.out.println(ciudad.getNombre()+"1\n");
 			}else{
 				ciudad.setIdent(null);
 				ciudad.setActivo(ACTIVE_CIUDAD);
 				ciudadrepository.save(ciudad);
+				System.out.println(ciudad.getNombre()+"2\n");
 			}
 		} catch (DaoException e) {
 			e.printStackTrace();
@@ -89,12 +91,12 @@ public class CiudadService implements CiudadBl {
 	 * @return true si la ciudad existe en la base de datos, falso si no existe o si esta inactivo
 	 */
 	public boolean ciudadExiste(Ciudad c){
-		System.out.println(c.getActivo()+"1\n");
+		
 		if(c != null){
-			System.out.println(c.getActivo()+"2\n");
+		
 			String isActive = c.getActivo();
 			if(isActive.equals(ACTIVE_CIUDAD)){
-				System.out.println(c.getActivo()+"3\n");
+				
 				return true;
 			}
 		}
@@ -108,6 +110,19 @@ public class CiudadService implements CiudadBl {
 	@Override
 	public void updateExistingCiudad(String id, Ciudad ciudad) throws DaoException {
 		try {
+			String nombre = ciudad.getNombre();
+			String departamento = ciudad.getDepartamento();
+			String habitantes = ciudad.getHabitantes();
+			String importancia = ciudad.getImportancia();
+			String gentilicio = ciudad.getGentilicio();
+			System.out.println(nombre+" "+departamento+" "+habitantes+" "+importancia+" "+gentilicio+"\n");
+			if(nombre == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el nombre de la ciudad");
+			else if(departamento == null || "".equals(departamento.trim())) throw new DaoException("Ingrese el nombre del departamento");
+			else if(habitantes == null || "".equals(habitantes.trim())) throw new DaoException("Ingrese el número de habitantes");
+			else if(importancia == null || "".equals(importancia.trim())) throw new DaoException("Ingrese la posición de importancia");
+			else if(gentilicio == null || "".equals(gentilicio.trim())) throw new DaoException("Ingrese el gentilicio");
+
+			
 			Ciudad c = new Ciudad();
 			c=ciudadrepository.findByIdent(ciudad.getIdent());
 			System.out.println(c.getActivo()+"\n");

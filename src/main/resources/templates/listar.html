@@ -8,6 +8,13 @@
 <body>
 
 <div class="container">
+<div class="row text-center" >
+<p>
+   	<a th:href="@{/add}">Add New
+	<span class="glyphicon glyphicon-plus"></span></a></p>
+   <p> <a th:href="@{/search}">Buscar
+    <span class="glyphicon glyphicon-search"></span></a></p>
+                    </div>
 <!-- <form action="" th:action="@{/update}" th:object="${id}" method="get"> -->
 <table class="table table-bordered table table-striped">
   <tr>
@@ -18,6 +25,7 @@
     <th class="tg-yw4l">Posición de Importancia</th>
     <th class="tg-yw4l">Gentilicio</th>
     <th class="tg-yw4l">Opciones</th>
+    <th>Opciones</th>
  
   </tr>
   <tr th:each="ciudad : ${ciudades}">
@@ -28,14 +36,16 @@
     <td th:text="${ciudad.importancia}" class="tg-yw4l"></td>
     <td th:text="${ciudad.gentilicio}" class="tg-yw4l"></td>
     <td>
-    	<a th:href="@{'update/'+${ciudad.ident}}">Editar</a><a th:href="@{'delete/'+${ciudad.ident}}">Eliminar</a>
+    	<a th:href="@{'update/'+${ciudad.ident}}">Editar 
+    	<span class="glyphicon glyphicon-pencil"></span>
+    	</a></td>
+    	<td>
+    	<a th:href="@{'delete/'+${ciudad.ident}}">Eliminar
+    	<span class="glyphicon glyphicon-trash"></span></a>
     </td>
   </tr>
 </table>
-<div class="row text-center" >
-                        <a th:href="@{/add}">Add New</a>
-                        
-                    </div>
+
 </div>
 </body>
 </html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<title>Insert title here</title>
+</head>
+<body>
+<div class="container">
+		<div class="row text-center">
+			<div class="col-md-2"> </div>
+			<div class="col-md-8"> 
+				<form id="searchform" th:action="@{/searched}" th:object="${ciudad}" action="#" method="get">
+				
+				<label for="nombre">Buscar por ciudad ó departamento</label>
+				<input type="search" th:field="*{nombre}"/>
+				
+			<div class="form-actions">
+				<input type="submit" name="search"/>
+			</div>
+		</form>
+
+			</div>
+ 			<div class="col-md-2"> </div>
+ 		</div>
+	</div>
+	 
+</body>
+</html>

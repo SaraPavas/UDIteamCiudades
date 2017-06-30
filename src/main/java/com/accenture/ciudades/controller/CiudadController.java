@@ -1,17 +1,23 @@
 package com.accenture.ciudades.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.accenture.ciudades.dao.CiudadRepository;
 import com.accenture.ciudades.dto.Ciudad;
@@ -76,8 +82,60 @@ public class CiudadController {
 	@RequestMapping("/add")
     public ModelAndView addNewCity() {
         ModelAndView mav = new ModelAndView();
+        Ciudad ciudad = new Ciudad();
+		ciudad.setIdent(null);
+		ciudad.setNombre("nombre");
+		ciudad.setDepartamento("departamento");
+		ciudad.setHabitantes("habitantes");
+		ciudad.setImportancia("importancia");
+		ciudad.setGentilicio("gentilicio");
+		ciudad.setActivo("true");
+		mav.addObject("ciudad",ciudad);
         mav.setViewName("add");
         return mav;
+    }
+	@RequestMapping(value="/ciudades",params={"save"})
+    public ModelAndView newSaved(@ModelAttribute Ciudad ciudad) {
+		System.out.println(ciudad.getNombre()+"newSaved\n");
+			try {
+				System.out.println(ciudad.getNombre()+"newSavedtry1\n");
+				ciudadservice.addNewCiudad(ciudad);
+				System.out.println(ciudad.getNombre()+"newSavedtry2\n");
+			} catch (DaoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// TODO Auto-generated catch block
+			
+	
+        
+        return new ModelAndView("redirect:/ciudades");
+    }
+	@RequestMapping("/search")
+    public ModelAndView searchCity() {
+		ModelAndView mav = new ModelAndView();
+        Ciudad ciudad = new Ciudad();
+        ciudad.setIdent(null);
+		ciudad.setNombre("palabra");
+		ciudad.setDepartamento("palabra");
+		ciudad.setHabitantes("palabra");
+		ciudad.setImportancia("palabra");
+		ciudad.setGentilicio("palabra");
+		ciudad.setActivo("true");
+		mav.addObject("ciudad",ciudad);
+        mav.setViewName("search");
+        return mav;
+    }
+	@RequestMapping(value="/searched",params={"search"})
+    public ModelAndView searchedCity(@ModelAttribute Ciudad c) {
+		String palabra = c.getNombre();
+		System.out.println(palabra+"\n");
+		List <Ciudad> ciudad = new ArrayList<>();
+		ciudad = ciudadservice.getCiudadByNombreAndDepartamento(palabra);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("listar");
+		mav.addObject("ciudades", ciudad);
+		return mav;
     }
 //	@RequestMapping("/ciudades")
 //		public List<Ciudad> listarCiudades() {

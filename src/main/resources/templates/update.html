@@ -14,7 +14,7 @@
 				<form id="update" th:action="@{/ciudades}" th:object="${ciudad}" action="#" th:method="post">
 	 				<p><input type="text" th:value="${ciudad.ident}" readonly="readonly" th:field="*{ident}"/></p>
 	 				<p><label for="nombre">Ciudad</label> </p>
-			 		<p><input type="text" th:value="${ciudad.nombre}" readonly="readonly" th:field="*{nombre}"/></p>
+			 		<p><input type="text" th:value="${ciudad.nombre}" th:field="*{nombre}"/></p>
 			 		<p><label for="nombre">Departamento</label></p>
 			 		<p><input type="text" th:value="${ciudad.departamento}" th:field="*{departamento}"/></p>
 			 		<p><label for="nombre">Número de  habitantes</label> </p>

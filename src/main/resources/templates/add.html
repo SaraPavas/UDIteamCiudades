@@ -3,10 +3,36 @@
 <head>
 <meta charset="utf-8"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-<title>Turururruru</title>
+<title>Agregar nueva ciudad</title>
 </head>
 <body>
+	<div class="container">
+		<div class="row text-center">
+			<div class="col-md-2"> </div>
+			<div class="col-md-8"> 
+				<form id="messageForm" th:action="@{/ciudades}" th:object="${ciudad}" action="#" method="post">
+				<input type="hidden" th:field="*{ident}" />
+				<label for="nombre">Ciudad</label>
+				<input type="text" th:field="*{nombre}"/>
+				<label for="apellido">Departamento</label>
+				<input type="text" th:field="*{departamento}"/>
+				<label for="email">Numero de habitantes</label>
+				<input type="text" th:field="*{habitantes}"/>
+				<label for="username">Posición de Importantacia</label>
+				<input type="text" th:field="*{importancia}"/>
+				<label for="contrasena">Gentilicio</label>
+				<input type="text" th:field="*{gentilicio}"/>
+				<input type="hidden" th:field="*{activo}"/>
+			<div class="form-actions">
+				<input type="submit" name="save" />
+			</div>
+		</form>
 
+			</div>
+ 			<div class="col-md-2"> </div>
+ 		</div>
+	</div>
+	 
  	
 </body>	
 </html>
