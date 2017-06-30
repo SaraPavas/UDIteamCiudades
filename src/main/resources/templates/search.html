@@ -31,7 +31,12 @@
 					<button  class="btn btn-info" type="submit" name="search">Buscar <span
 								class="glyphicon glyphicon-search"></span></button>
 				</div>
-				
+				<div th:if="${message != ''}" class="alert alert-warning alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismis="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<strong>Warning!</strong><div th:text="${message}"></div>
+				</div>
 			<div class="form-actions">
 				
 				<a class="btn btn-info" th:href="@{/ciudades}">Cancelar</a>

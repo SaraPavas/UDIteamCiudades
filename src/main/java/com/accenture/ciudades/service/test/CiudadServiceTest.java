@@ -92,7 +92,7 @@ public class CiudadServiceTest {
 		
 	}
 	@Test
-	public void searchEByNombreANdDepartamentoLetraInicialTest(){
+	public void searchEByNombreANdDepartamentoLetraInicialTest() throws DaoException{
 		/**
 		 * Departamentos que inician con M
 		 */
@@ -104,7 +104,7 @@ public class CiudadServiceTest {
 		}
 	}
 	@Test
-	public void searchEByNombreANdDepartamentoporDepartamentoTest(){
+	public void searchEByNombreANdDepartamentoporDepartamentoTest() throws DaoException{
 		/**
 		 * Departamentos y ciudades que inician con M
 		 */
@@ -116,7 +116,7 @@ public class CiudadServiceTest {
 		}
 	}
 	@Test
-	public void searchEByNombreANdDepartamentoporCiudadTest(){
+	public void searchEByNombreANdDepartamentoporCiudadTest() throws DaoException{
 		/**
 		 * Departamentos y ciudades que inician con M
 		 */

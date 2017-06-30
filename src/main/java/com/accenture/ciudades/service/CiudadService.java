@@ -35,6 +35,7 @@ public class CiudadService implements CiudadBl {
 	public List<Ciudad> ListarActivos() throws DaoException {
 		//List<Ciudad> ciudad = new ArrayList<>();
 		try {
+			
 			return ciudadrepository.findByActivo(ACTIVE_CIUDAD);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -60,24 +61,23 @@ public class CiudadService implements CiudadBl {
 
 			Ciudad c = new Ciudad();
 			c = ciudadrepository.findByNombre(ciudad.getNombre()); 
-			System.out.println(ciudad.getNombre()+"\n");
-			if(nombre.isEmpty() || nombre == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el nombre de la ciudad");
-			else if(departamento.isEmpty() || departamento == null || "".equals(departamento.trim())) throw new DaoException("Ingrese el nombre del departamento");
-			else if(habitantes.isEmpty() || habitantes == null || "".equals(habitantes.trim())) throw new DaoException("Ingrese el número de habitantes");
-			else if(importancia.isEmpty() || importancia == null || "".equals(importancia.trim())) throw new DaoException("Ingrese la posición de importancia");
-			else if(gentilicio.isEmpty() || gentilicio == null || "".equals(gentilicio.trim())) throw new DaoException("Ingrese el gentilicio");
-			System.out.println(ciudad.getNombre()+"\n");
+			
+			if(nombre.equals("Nombre") || nombre == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el nombre de la ciudad");
+			else if(departamento.equals("Departamento") || departamento == null || "".equals(departamento.trim())) throw new DaoException("Ingrese el nombre del departamento");
+			else if(habitantes.equals("Habitantes") || habitantes == null || "".equals(habitantes.trim())) throw new DaoException("Ingrese el número de habitantes");
+			else if(importancia.equals("Posición de Importancia") || importancia == null || "".equals(importancia.trim())) throw new DaoException("Ingrese la posición de importancia");
+			else if(gentilicio.equals("Gentilicio") || gentilicio == null || "".equals(gentilicio.trim())) throw new DaoException("Ingrese el gentilicio");
 			if(ciudadExiste(c)) throw new DaoException("La ciudad ya existe en la base de datos");
-			System.out.println(ciudad.getNombre()+"\n");
+			
 			if(c != null ){
 				c.setActivo(ACTIVE_CIUDAD);
 				ciudadrepository.save(c);
-				System.out.println(ciudad.getNombre()+"1\n");
+				
 			}else{
 				ciudad.setIdent(null);
 				ciudad.setActivo(ACTIVE_CIUDAD);
 				ciudadrepository.save(ciudad);
-				System.out.println(ciudad.getNombre()+"2\n");
+				
 			}
 
 	}
@@ -111,7 +111,7 @@ public class CiudadService implements CiudadBl {
 			String habitantes = ciudad.getHabitantes();
 			String importancia = ciudad.getImportancia();
 			String gentilicio = ciudad.getGentilicio();
-			System.out.println(nombre+" "+departamento+" "+habitantes+" "+importancia+" "+gentilicio+"\n");
+			
 			if(nombre == null || "".equals(nombre.trim())) throw new DaoException("Ingrese el nombre de la ciudad");
 			else if(departamento == null || "".equals(departamento.trim())) throw new DaoException("Ingrese el nombre del departamento");
 			else if(habitantes == null || "".equals(habitantes.trim())) throw new DaoException("Ingrese el número de habitantes");
@@ -132,28 +132,6 @@ public class CiudadService implements CiudadBl {
 	}
 
 
-
-	public List<Ciudad> getAllCiudades () {
-		 //return Ciudad;
-		 List<Ciudad> ciudad = new ArrayList<>();
-		 ciudadrepository.findAll()
-		 .forEach(ciudad::add);
-		 return ciudad;
-	 }
-	
-	public Ciudad getETopic (String id){
-		//return topics.stream().filter(t -> t.getId().equals(id)).findFirst().get();
-		 return ciudadrepository.findOne(id);
-		}
-	public void addCiudad(Ciudad ciudad) {
-		//topics.add(topic);
-		ciudadrepository.save(ciudad);
-		
-	}
-	
-	public void updateCiudad(String id, Ciudad ciudad) {
-		ciudadrepository.save(ciudad);
-	}
 	
 	/**
 	 * Filtra las ciudades por nombre
@@ -176,31 +154,27 @@ public class CiudadService implements CiudadBl {
 	 * Filtra por ciudad y por departamento
 	 * @param palabra
 	 * @return ciudad encontrada
+	 * @throws DaoException 
 	 */
-	public List<Ciudad> getCiudadByNombreAndDepartamento(String palabra) {
+	public List<Ciudad> getCiudadByNombreAndDepartamento(String palabra) throws DaoException {
 		
 		List<Ciudad> ciudad = new ArrayList<>();
 		
-		try {
-			
+		
+			if(palabra.equals("Palabra clave: Ciudad/Departamento") || palabra == null || "".equals(palabra.trim())) throw new DaoException("Ingrese una palabra clave");
 			ciudad.addAll(ciudadrepository.findByNombreStartingWith(palabra));
 			ciudad.addAll(ciudadrepository.findByDepartamentoStartingWith(palabra));
 			for(int i=0; i<ciudad.size(); i++){
-				System.out.println(ciudad.get(i).getNombre()+"\n");
 				if(ciudad.get(i).getActivo().equals(NO_ACTIVE_CIUDAD)){
 					ciudad.remove(i);
 				}
 			}
-			System.out.println(ciudad.size()+"\n");
-			for(int i=0; i<ciudad.size(); i++){
-				System.out.println(ciudad.get(i).getNombre()+"\n");
-			}
+			
+			if(ciudad.size()==0) throw new DaoException("No se encontró");
+			
 			return ciudad; 
-		} catch (DaoException e) {
-			e.printStackTrace();
-		}
 		
-		return null;
+
 		
 	}
 	/**
@@ -225,7 +199,13 @@ public class CiudadService implements CiudadBl {
 		
 		Ciudad ciudad = new Ciudad();
 		try {
+			/**
+			 * Devuelve la ciudad por id y si esta activo=TRUE
+			 */
 			ciudad = ciudadrepository.findByIdentAndActivo(i, ACTIVE_CIUDAD);
+			/**
+			 * si trae la ciudad{ cambia el estado a no activo y lo almacena
+			 */
 			if(ciudad != null){
 				ciudad.setActivo(NO_ACTIVE_CIUDAD);
 				ciudadrepository.save(ciudad);

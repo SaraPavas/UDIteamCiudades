@@ -35,6 +35,12 @@ public class CiudadController {
 	private CiudadService ciudadservice;
 	@Autowired
 	private CiudadRepository ciudadrepository;
+	
+	/**
+	 * Es la vista principal cuando el usuario ingresa a la aplicación web, lista todas las 
+	 * ciudades activas en la base de datos
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, value="/ciudades")
     public ModelAndView form() {
         ModelAndView mav = new ModelAndView();
@@ -47,30 +53,53 @@ public class CiudadController {
 		}
         return mav;
     }
-
-//	@RequestMapping(method = RequestMethod.GET, value="/update")
+	/**
+	 * Redirige a la vista con los campos para editar una ciudad, es llamado cuando el usuario
+	 * clickea la etiqueta editar de una ciudad en la lsita de la vista principal
+	 * @param id es el id de la ciudad que va a ser editada
+	 * @return
+	 */
 	@RequestMapping("/update/{id}")
     public ModelAndView uPdate(@PathVariable String id) {
+		/**
+		 * message es un objeto enviado a la vista para almacenar una excepción en caso que el usuario
+		 * no diligencie correctamente los campos
+		 */
 		String message = "";
         ModelAndView mav = new ModelAndView();
+        /**
+         * Trae a la vista los datos de la ciudad con el id
+         */
         Ciudad ciudad = ciudadrepository.findByIdent(id);
         mav.setViewName("update");
         mav.addObject("ciudad",ciudad);
         mav.addObject("message", message);
         return mav;
     }
+	/**
+	 * Guarda la infromación contenida en los campos, se asigna a una ciudad y se almacena en la base de datos 
+	 * @param ciudad corresponde a la ciudad almacenada por el usuario en la vista
+	 * @return
+	 */
 	@RequestMapping(value="/ciudades",params={"update"})
     public ModelAndView uPdateSaved(@ModelAttribute Ciudad ciudad) {
 		String message = "";
 		ModelAndView modelandview = new ModelAndView();
-		System.out.println(ciudad.getIdent()+"\n");
-		System.out.println(ciudad.getActivo()+"\n");
+		/**
+		 * Busca el id de la ciudad que esta editando y cambia el estado por el correspondiente 
+		 */
 		ciudad.setActivo(ciudadrepository.findOne(ciudad.getIdent()).getActivo());
-		System.out.println(ciudad.getActivo()+"\n");
         try {
 			ciudadservice.updateExistingCiudad(ciudad.getIdent(), ciudad);
+			/**
+			 * Si no se lanza una excepción se redirige a ciudades
+			 */
 			modelandview.setViewName("redirect:/ciudades");
 		} catch (DaoException e) {
+			/**
+			 * Si se lanza una excepción se sale de la vista y se envia el mensaje de la
+			 * excepcion a la vista
+			 */
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			message = e.getMessage();
@@ -79,41 +108,57 @@ public class CiudadController {
         modelandview.addObject("message", message);
         return modelandview;
     }
+	/**
+	 * Elimina una ciudad de la base de datos cuando el usuario
+	 * clickea eliminar
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping("/delete/{id}")
     public ModelAndView deleteCity(@PathVariable String id) {
         ciudadservice.deleteCiudad(id);
       
         return new ModelAndView("redirect:/ciudades");
     }
+	/**
+	 * *Redirige a la vista con los campos para agregar una ciudad, es llamado cuando el usuario
+	 * clickea la etiqueta agregar nueva ciudad  en la lsita de la vista principal
+	 * @return
+	 */
 	@RequestMapping("/add")
     public ModelAndView addNewCity() {
         ModelAndView mav = new ModelAndView();
         Ciudad ciudad = new Ciudad();
         String message = "";
 		ciudad.setIdent(null);
-		ciudad.setNombre("nombre");
-		ciudad.setDepartamento("departamento");
-		ciudad.setHabitantes("habitantes");
-		ciudad.setImportancia("importancia");
-		ciudad.setGentilicio("gentilicio");
+		ciudad.setNombre("Nombre");
+		ciudad.setDepartamento("Departamento");
+		ciudad.setHabitantes("Habitantes");
+		ciudad.setImportancia("Posición de Importancia");
+		ciudad.setGentilicio("Gentilicio");
 		ciudad.setActivo("true");
 		mav.addObject("ciudad",ciudad);
         mav.setViewName("add");
         mav.addObject("message", message);
         return mav;
     }
+	/**
+	 * Guarda la infromación contenida en los campos, se asigna a una ciudad y se almacena en la base de datos 
+	 * @param ciudad
+	 * @return
+	 */
 	@RequestMapping(value="/ciudades",params={"save"})
     public ModelAndView newSaved(@ModelAttribute Ciudad ciudad) {
-		System.out.println(ciudad.getNombre()+"newSaved\n");
+		
 		String message = "";
 		ModelAndView modelandview = new ModelAndView();
 			try {
-				System.out.println(ciudad.getNombre()+"newSavedtry1\n");
+				
 				ciudadservice.addNewCiudad(ciudad);
 				modelandview.setViewName("redirect:/ciudades");
-				System.out.println(ciudad.getNombre()+"newSavedtry2\n");
+				
 			} catch (DaoException e) {
-				System.out.println(ciudad.getNombre()+"newSavedtry3\n");
+				
 				e.printStackTrace();
 				message = e.getMessage();
 				modelandview.setViewName("add");
@@ -126,30 +171,50 @@ public class CiudadController {
         
         return modelandview;
     }
+	/**
+	 * Lleva a la vista buscar
+	 * @return
+	 */
 	@RequestMapping("/search")
     public ModelAndView searchCity() {
 		ModelAndView mav = new ModelAndView();
+		String message = "";
         Ciudad ciudad = new Ciudad();
         ciudad.setIdent(null);
-		ciudad.setNombre("palabra");
-		ciudad.setDepartamento("palabra");
-		ciudad.setHabitantes("palabra");
-		ciudad.setImportancia("palabra");
-		ciudad.setGentilicio("palabra");
+		ciudad.setNombre("Palabra clave: Ciudad/Departamento");
+		ciudad.setDepartamento("Palabra clave: Ciudad/Departamento");
+		ciudad.setHabitantes("Palabra clave: Ciudad/Departamento");
+		ciudad.setImportancia("Palabra clave: Ciudad/Departamento");
+		ciudad.setGentilicio("Palabra clave: Ciudad/Departamento");
 		ciudad.setActivo("true");
 		mav.addObject("ciudad",ciudad);
         mav.setViewName("search");
+        mav.addObject("message", message);
         return mav;
     }
+	/**
+	 * Cuando el usuario oprime el botón buscar, encuentra la ciudad con la palabra ingresada en la base de datos
+	 * 
+	 * @param c
+	 * @return
+	 */
 	@RequestMapping(value="/searched",params={"search"})
     public ModelAndView searchedCity(@ModelAttribute Ciudad c) {
-		String palabra = c.getNombre();
-		System.out.println(palabra+"\n");
-		List <Ciudad> ciudad = new ArrayList<>();
-		ciudad = ciudadservice.getCiudadByNombreAndDepartamento(palabra);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("listar");
-		mav.addObject("ciudades", ciudad);
+		String palabra = c.getNombre();
+		String message = "";
+		List <Ciudad> ciudad = new ArrayList<>();
+		try {
+			ciudad = ciudadservice.getCiudadByNombreAndDepartamento(palabra);
+			mav.setViewName("listar");
+			mav.addObject("ciudades", ciudad);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			message = e.getMessage();
+			mav.setViewName("search");
+		}
+		mav.addObject("message", message);
+		
 		return mav;
     }
 //	@RequestMapping("/ciudades")
