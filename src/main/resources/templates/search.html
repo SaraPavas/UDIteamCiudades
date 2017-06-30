@@ -2,26 +2,44 @@
 <html xmlns:th="http://www.thymeLeaf.org">
 <head>
 <meta charset="utf-8"/>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<title>Buscar Ciudad</title>
 </head>
-<body>
+<body class="well">
+	<div class="page-header text-center info">
+            <h1 style="color:#800080;">Buscar</h1>
+            <h3 style="color:#595959;">Ciudad</h3>
+    </div>
 <div class="container">
 		<div class="row text-center">
-			<div class="col-md-2"> </div>
-			<div class="col-md-8"> 
+			<div class="col-md-1"> </div>
+			<div class="col-md-10">
+			 
 				<form id="searchform" th:action="@{/searched}" th:object="${ciudad}" action="#" method="get">
-				
 				<label for="nombre">Buscar por ciudad ó departamento</label>
-				<input type="search" th:field="*{nombre}"/>
+				<div class="form-group">
+					
+					<input class="text-center" type="search" th:field="*{nombre}"/>
+					<button  class="btn btn-info" type="submit" name="search">Buscar <span
+								class="glyphicon glyphicon-search"></span></button>
+				</div>
 				
 			<div class="form-actions">
-				<input type="submit" name="search"/>
+				
+				<a class="btn btn-info" th:href="@{/ciudades}">Cancelar</a>
 			</div>
 		</form>
 
 			</div>
- 			<div class="col-md-2"> </div>
+ 			<div class="col-md-1"> </div>
  		</div>
 	</div>
 	 

@@ -52,7 +52,6 @@ public class CiudadService implements CiudadBl {
 	 */
 	@Override
 	public void addNewCiudad(Ciudad ciudad) throws DaoException {
-		try {
 			String nombre = ciudad.getNombre();
 			String departamento = ciudad.getDepartamento();
 			String habitantes = ciudad.getHabitantes();
@@ -80,9 +79,6 @@ public class CiudadService implements CiudadBl {
 				ciudadrepository.save(ciudad);
 				System.out.println(ciudad.getNombre()+"2\n");
 			}
-		} catch (DaoException e) {
-			e.printStackTrace();
-		}
 
 	}
 	/**
@@ -109,7 +105,7 @@ public class CiudadService implements CiudadBl {
 	 */
 	@Override
 	public void updateExistingCiudad(String id, Ciudad ciudad) throws DaoException {
-		try {
+		
 			String nombre = ciudad.getNombre();
 			String departamento = ciudad.getDepartamento();
 			String habitantes = ciudad.getHabitantes();
@@ -131,9 +127,7 @@ public class CiudadService implements CiudadBl {
 			}else{
 				throw new DaoException("No es posible modificar, la ciudad no existe en la base de datos");
 			}
-		} catch (DaoException e) {
-			e.printStackTrace();
-		}
+		
 		
 	}
 

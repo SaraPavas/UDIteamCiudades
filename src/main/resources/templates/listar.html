@@ -1,51 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org">
 <head>
-<meta charset="utf-8"/>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<meta charset="utf-8" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <title>Insert title here</title>
 </head>
 <body>
 
-<div class="container">
-<div class="row text-center" >
-<p>
-   	<a th:href="@{/add}">Add New
-	<span class="glyphicon glyphicon-plus"></span></a></p>
-   <p> <a th:href="@{/search}">Buscar
-    <span class="glyphicon glyphicon-search"></span></a></p>
-                    </div>
-<!-- <form action="" th:action="@{/update}" th:object="${id}" method="get"> -->
-<table class="table table-bordered table table-striped">
-  <tr>
-    <th class="tg-yw4l">ID</th>
-    <th class="tg-yw4l">Nombre</th>
-    <th class="tg-yw4l">Departamento</th>
-    <th class="tg-yw4l">Habitantes</th>
-    <th class="tg-yw4l">Posición de Importancia</th>
-    <th class="tg-yw4l">Gentilicio</th>
-    <th class="tg-yw4l">Opciones</th>
-    <th>Opciones</th>
- 
-  </tr>
-  <tr th:each="ciudad : ${ciudades}">
-    <td th:text="${ciudad.ident}" class="tg-yw4l"></td>
-    <td th:text="${ciudad.nombre}" class="tg-yw4l"></td>
-    <td th:text="${ciudad.departamento}" class="tg-yw4l"></td>
-    <td th:text="${ciudad.habitantes}" class="tg-yw4l"></td>
-    <td th:text="${ciudad.importancia}" class="tg-yw4l"></td>
-    <td th:text="${ciudad.gentilicio}" class="tg-yw4l"></td>
-    <td>
-    	<a th:href="@{'update/'+${ciudad.ident}}">Editar 
-    	<span class="glyphicon glyphicon-pencil"></span>
-    	</a></td>
-    	<td>
-    	<a th:href="@{'delete/'+${ciudad.ident}}">Eliminar
-    	<span class="glyphicon glyphicon-trash"></span></a>
-    </td>
-  </tr>
-</table>
+	<div class="page-header text-center info">
+            <h1 style="color:#800080;"> Administrador web CRUD</h1>
+            <h3 style="color:#595959;"> Ciudades</h3>
+        </div>
+	<div class="container">
+		<div class="row text-center ">
 
-</div>
+
+			<div class="col-md-1">
+				<p>
+					<a th:href="@{/add}">Agregar Ciudad <span
+						class="glyphicon glyphicon-plus"></span></a>
+				</p>
+				<p></p>
+				<p></p>
+				<p></p>
+				<p>
+					<a th:href="@{/search}">Buscar <span
+						class="glyphicon glyphicon-search"></span></a>
+				</p>
+			</div>
+
+			<div class="col-md-10">
+
+				<!-- <form action="" th:action="@{/update}" th:object="${id}" method="get"> -->
+				<table class="table table-bordered table table-striped text-center">
+					<tr>
+						<th style="color:#800080;" class="tg-yw4l text-center">ID</th>
+						<th style="color:#800080;" class="tg-yw4l text-center">Nombre</th>
+						<th style="color:#800080;" class="tg-yw4l text-center">Departamento</th>
+						<th style="color:#800080;" class="tg-yw4l text-center">Habitantes</th>
+						<th style="color:#800080;" class="tg-yw4l text-center">Posición de<br></br>Importancia
+						</th>
+						<th style="color:#800080;" class="tg-yw4l text-center">Gentilicio</th>
+						<th style="color:#800080;" class="tg-yw4l text-center">Opciones</th>
+						<th style="color:#800080;" class="tg-yw4l text-center">Opciones</th>
+					</tr>
+					<tr th:each="ciudad : ${ciudades}">
+						<td th:text="${ciudad.ident}" class="tg-yw4l"></td>
+						<td th:text="${ciudad.nombre}" class="tg-yw4l"></td>
+						<td th:text="${ciudad.departamento}" class="tg-yw4l"></td>
+						<td th:text="${ciudad.habitantes}" class="tg-yw4l"></td>
+						<td th:text="${ciudad.importancia}" class="tg-yw4l"></td>
+						<td th:text="${ciudad.gentilicio}" class="tg-yw4l"></td>
+						<td><a th:href="@{'update/'+${ciudad.ident}}">Editar <span
+								class="glyphicon glyphicon-pencil"></span>
+						</a></td>
+						<td><a th:href="@{'delete/'+${ciudad.ident}}">Eliminar <span
+								class="glyphicon glyphicon-trash"></span></a></td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="col-md-1"></div>
+
+		</div>
+
+
+	</div>
 </body>
 </html>

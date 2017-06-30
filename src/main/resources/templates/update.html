@@ -2,29 +2,53 @@
 <html xmlns:th="http://www.thymeLeaf.org">
 <head>
 <meta charset="utf-8"/>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-<title>Insert title here</title>
-</head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 
-<body>
-	<div class="container">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<title>Editar ciudad</title>
+</head>
+<body class="well">
+	<div class="page-header text-center info">
+            <h1 style="color:#800080;">Editar</h1>
+            <h3 style="color:#595959;">Ciudad</h3>
+    </div>
+	<div class="container-fluid">
 		<div class="row text-center">
 			<div class="col-md-2"> </div>
 			<div class="col-md-8"> 
 				<form id="update" th:action="@{/ciudades}" th:object="${ciudad}" action="#" th:method="post">
-	 				<p><input type="text" th:value="${ciudad.ident}" readonly="readonly" th:field="*{ident}"/></p>
+	 				<p><input class="text-center" type="text" th:value="${ciudad.ident}" readonly="readonly" th:field="*{ident}"/></p>
+	 				<div class="form-group">
 	 				<p><label for="nombre">Ciudad</label> </p>
-			 		<p><input type="text" th:value="${ciudad.nombre}" th:field="*{nombre}"/></p>
+			 		<p><input class="text-center" type="text" th:value="${ciudad.nombre}" th:field="*{nombre}"/></p></div>
+			 		<div class="form-group">
 			 		<p><label for="nombre">Departamento</label></p>
-			 		<p><input type="text" th:value="${ciudad.departamento}" th:field="*{departamento}"/></p>
-			 		<p><label for="nombre">Número de  habitantes</label> </p>
-			 		<p><input type="text" th:value="${ciudad.habitantes}" th:field="*{habitantes}"/></p>
+			 		<p><input class="text-center" type="text" th:value="${ciudad.departamento}" th:field="*{departamento}"/></p>
+			 		</div>
+			 		<div class="form-group"><p><label for="nombre">Número de  habitantes</label> </p>
+			 		<p><input class="text-center" type="text" th:value="${ciudad.habitantes}" th:field="*{habitantes}"/></p>
+			 		</div>
+			 		<div class="form-group">
 			 		<p><label for="nombre">Posición de importancia</label></p>
-			 		<p><input type="text" th:value="${ciudad.importancia}" th:field="*{importancia}"/></p>
+			 		<p><input class="text-center" type="text" th:value="${ciudad.importancia}" th:field="*{importancia}"/></p></div>
+			 		<div class="form-group">
 			 		<p><label for="nombre">Gentilicio</label> </p>
-			 		<p><input type="text" th:value="${ciudad.gentilicio}" th:field="*{gentilicio}"/></p>
+			 		<p><input class="text-center" type="text" th:value="${ciudad.gentilicio}" th:field="*{gentilicio}"/></p></div>
+			 		<div th:if="${message != ''}" class="alert alert-warning alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismis="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<strong>Warning!</strong><div th:text="${message}"></div>
+				</div>
  		 			<div class="row text-center" >
-                            <button type="submit" name="update">Guardar</button>
+                            <button class="btn btn-info" type="submit" name="update">Guardar</button>
+                            <a class="btn btn-info" th:href="@{/ciudades}">Cancelar</a>
 
                     </div>
  				</form>

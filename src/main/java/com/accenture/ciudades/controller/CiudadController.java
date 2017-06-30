@@ -51,27 +51,33 @@ public class CiudadController {
 //	@RequestMapping(method = RequestMethod.GET, value="/update")
 	@RequestMapping("/update/{id}")
     public ModelAndView uPdate(@PathVariable String id) {
+		String message = "";
         ModelAndView mav = new ModelAndView();
         Ciudad ciudad = ciudadrepository.findByIdent(id);
         mav.setViewName("update");
         mav.addObject("ciudad",ciudad);
-      
+        mav.addObject("message", message);
         return mav;
     }
 	@RequestMapping(value="/ciudades",params={"update"})
     public ModelAndView uPdateSaved(@ModelAttribute Ciudad ciudad) {
+		String message = "";
+		ModelAndView modelandview = new ModelAndView();
 		System.out.println(ciudad.getIdent()+"\n");
 		System.out.println(ciudad.getActivo()+"\n");
 		ciudad.setActivo(ciudadrepository.findOne(ciudad.getIdent()).getActivo());
 		System.out.println(ciudad.getActivo()+"\n");
         try {
 			ciudadservice.updateExistingCiudad(ciudad.getIdent(), ciudad);
+			modelandview.setViewName("redirect:/ciudades");
 		} catch (DaoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			message = e.getMessage();
+			modelandview.setViewName("update");
 		}
-        
-        return new ModelAndView("redirect:/ciudades");
+        modelandview.addObject("message", message);
+        return modelandview;
     }
 	@RequestMapping("/delete/{id}")
     public ModelAndView deleteCity(@PathVariable String id) {
@@ -83,6 +89,7 @@ public class CiudadController {
     public ModelAndView addNewCity() {
         ModelAndView mav = new ModelAndView();
         Ciudad ciudad = new Ciudad();
+        String message = "";
 		ciudad.setIdent(null);
 		ciudad.setNombre("nombre");
 		ciudad.setDepartamento("departamento");
@@ -92,24 +99,32 @@ public class CiudadController {
 		ciudad.setActivo("true");
 		mav.addObject("ciudad",ciudad);
         mav.setViewName("add");
+        mav.addObject("message", message);
         return mav;
     }
 	@RequestMapping(value="/ciudades",params={"save"})
     public ModelAndView newSaved(@ModelAttribute Ciudad ciudad) {
 		System.out.println(ciudad.getNombre()+"newSaved\n");
+		String message = "";
+		ModelAndView modelandview = new ModelAndView();
 			try {
 				System.out.println(ciudad.getNombre()+"newSavedtry1\n");
 				ciudadservice.addNewCiudad(ciudad);
+				modelandview.setViewName("redirect:/ciudades");
 				System.out.println(ciudad.getNombre()+"newSavedtry2\n");
 			} catch (DaoException e) {
-				// TODO Auto-generated catch block
+				System.out.println(ciudad.getNombre()+"newSavedtry3\n");
 				e.printStackTrace();
+				message = e.getMessage();
+				modelandview.setViewName("add");
 			}
+			modelandview.addObject("message", message);
+			
 			// TODO Auto-generated catch block
 			
 	
         
-        return new ModelAndView("redirect:/ciudades");
+        return modelandview;
     }
 	@RequestMapping("/search")
     public ModelAndView searchCity() {
